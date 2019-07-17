@@ -19,8 +19,8 @@ class MyApp1 extends StatelessWidget {
     init();
     return new MaterialApp(
       title: 'Welcome to Flutter',
-      home: LoginPage(),
-//      home: MyApp(),
+//      home: LoginPage(),
+      home: MyApp(),
     );
   }
 

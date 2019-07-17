@@ -1,10 +1,9 @@
 package com.cwtcn.kmlib.protocol;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cwtcn.kmlib.data.MessagePushData;
 import com.cwtcn.kmlib.util.DateUtil;
 import com.cwtcn.kmlib.util.MyLog;
-
-import com.alibaba.fastjson.JSONObject;
 
 public class MessagePushReq extends Packet {
     public static final String CMD = "M_DOWN_RESOURCE";

@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.cwtcn.kmlib.api.KMConstants;
 import com.cwtcn.kmlib.api.KMLocationManager;
 import com.cwtcn.kmlib.api.KMManager;
 import com.cwtcn.kmlib.api.KMPushMamager;
+import com.cwtcn.kmlib.api.KMSettingManager;
 import com.cwtcn.kmlib.api.KMUserManager;
 import com.cwtcn.kmlib.api.KMWearerManager;
 import com.cwtcn.kmlib.data.LocHistoryData;
@@ -27,6 +29,7 @@ import com.hongka.hongka_flutter_p_example.plugin.FlutterEventHandler;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONArray;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
@@ -100,7 +103,7 @@ public class MainActivity extends FlutterActivity implements MyCallBack {
             //手机注册提交
             Log.e("mrh", Config.KM_REGISTER_MOBLE);
             KMUserManager.getInstance().registerWithMobile(call.<String>argument("phone"), call.<String>argument("pwd"),
-                    call.<String>argument("code"));
+                    call.<String>argument("code"),"hongka");
             hashtable.put(Config.KM_REGISTER_MOBLE, result);
         } else if (call.method.equals(Config.KM_ALL_TRACKER_LDGET)){
             //获取所有手表位置
@@ -120,10 +123,15 @@ public class MainActivity extends FlutterActivity implements MyCallBack {
             //消息推送
             Gson gson = new Gson();
             MessagePushData messagePushData ;
+            JSONArray jsonArray = new JSONArray();
             Log.e("mrh", call.<String>argument("message"));
             String str =  call.<String>argument("message");
             messagePushData = gson.fromJson(str,MessagePushData.class);
-            Log.e("mrh", messagePushData.getImei());
+
+            JSONArray array = new JSONArray(messagePushData.getResource());
+            Log.e("mrh", array.toString());
+
+//            KMSettingManager.getInstance().setStoryResource( "",array);
             KMPushMamager.getInstance().pushSrore(messagePushData);
             hashtable.put(Config.KM_MESSAGE_PUSH, result);
 //            result.success("sssssss");

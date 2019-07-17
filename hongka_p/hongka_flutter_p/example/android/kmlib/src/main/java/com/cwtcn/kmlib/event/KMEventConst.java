@@ -234,7 +234,11 @@ public interface KMEventConst {
     int EVENT_QUERY_PHONE_SET= 653;
     /**推送手机最新消息*/
     int EVENT_NEW_INFO_PUSH= 654;
+    /** 新版注册(手机号不需要验证码) */
+    int EVENT_REGISTER_V3 = 655;
+    /** 推送故事信息*/
+    int EVENT_PUSH_STORY_INFO = 656;
 
-    /** 消息推送*/
-    int EVENT_MESSAGE_PUSH= 655;
+    /** 推送故事信息*/
+    int EVENT_MESSAGE_PUSH= 657;
 }

@@ -1216,6 +1216,8 @@ public class NettyClientManager implements BusinessBaseHandler.ChannelHandlerCon
         //推送手机最新消息
         PACKET_FACTORY.put(PhoneAlertMessage.CMD, new PhoneAlertMessage());
 
+        PACKET_FACTORY.put(SendStorySetRes.CMD,new SendStorySetRes());
+
         PACKET_FACTORY.put(MessagePushRes.CMD,new MessagePushRes());
     }
 }

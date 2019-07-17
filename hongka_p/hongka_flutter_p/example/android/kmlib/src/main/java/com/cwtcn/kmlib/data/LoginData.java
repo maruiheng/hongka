@@ -49,6 +49,16 @@ public class LoginData {
         this.lang = Utils.getLocale(KMManager.getInstance().mContext);
     }
 
+    public LoginData(String username,String clientId, String mapType, String deviceToken) {
+        this.loginName = username;
+        this.password = "11111111";
+        this.clientID = clientId;
+        this.mapType = mapType;
+        this.deviceToken = deviceToken;
+        this.sVer = Utils.getAppVersion(KMManager.getInstance().mContext);
+        this.lang = Utils.getLocale(KMManager.getInstance().mContext);
+    }
+
     public LoginData(String authId, int souce, String pwd, String clientId, String mapType, String deviceToken) {
         this.authId = authId;
         this.newName = OauthPassword.getOauthName(souce, this.authId);

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
-import 'package:hongka_flutter_p/bean/trackerLeast_bean.dart';
 import 'package:hongka_flutter_p/bean/wearer_bean.dart';
 import 'package:hongka_flutter_p/bean/LocBean.dart';
 import 'package:hongka_flutter_p/src/config.dart';

@@ -40,7 +40,7 @@ public class PhoneUsageRecordDetailData implements Parcelable {
         dest.writeString(url);
     }
 
-    public static final Parcelable.Creator<PhoneUsageRecordDetailData> CREATOR = new Creator<PhoneUsageRecordDetailData>() {
+    public static final Creator<PhoneUsageRecordDetailData> CREATOR = new Creator<PhoneUsageRecordDetailData>() {
 
         @Override
         public PhoneUsageRecordDetailData createFromParcel(Parcel source) {

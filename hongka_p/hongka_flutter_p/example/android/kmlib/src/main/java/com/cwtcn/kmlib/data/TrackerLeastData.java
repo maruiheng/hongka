@@ -189,23 +189,4 @@ public class TrackerLeastData {
     public void setHourTime24(int hourTime24) {
         this.hourTime24 = hourTime24;
     }
-
-    @Override
-    public String toString() {
-        return "TrackerLeastData{" +
-                "imei='" + imei + '\'' +
-                ", act=" + act +
-                ", hit='" + hit + '\'' +
-                ", lct=" + lct +
-                ", lcts=" + lcts +
-                ", st='" + st + '\'' +
-                ", sms_location='" + sms_location + '\'' +
-                ", ring_mode='" + ring_mode + '\'' +
-                ", connect_mode='" + connect_mode + '\'' +
-                ", auto_type='" + auto_type + '\'' +
-                ", auto_time='" + auto_time + '\'' +
-                ", enable_fn_wl=" + enable_fn_wl +
-                ", hourTime24=" + hourTime24 +
-                '}';
-    }
 }

@@ -58,8 +58,17 @@ public class KMUserManager {
      * @param pwd
      * @param code
      */
-    public void registerWithMobile(String mobile, String pwd, String code) {
-        KMHttpHelper.userRegister(mobile, pwd, code);
+    public void registerWithMobile(String mobile, String pwd, String code,String clientId) {
+        KMHttpHelper.userRegister(mobile, pwd, code,clientId);
+    }
+
+    /**
+     * 新版手机号注册20190716
+     * @param phoneNum
+     * @param clientId
+     */
+    public void quickRegisterWithMobile(String phoneNum,String clientId){
+        KMHttpHelper.userRegister(phoneNum,clientId);
     }
 
     /**

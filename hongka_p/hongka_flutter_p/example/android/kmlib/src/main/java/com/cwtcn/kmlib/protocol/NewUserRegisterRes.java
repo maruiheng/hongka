@@ -9,21 +9,23 @@ import org.greenrobot.eventbus.EventBus;
 import okhttp3.Call;
 
 /**
- * 用户信息获取
- * Created by Allen on 2017/4/5.
+ * function: 新版注册接口
+ *
+ * @author xhl
+ * @date 2019/7/16 17:46
  */
 
-public class UserProfileSetRes extends StringCallback {
+public class NewUserRegisterRes extends StringCallback {
 
     @Override
     public void onError(Call call, Exception e) {
 
-        EventBus.getDefault().post(new KMEvent(KMEventConst.EVENT_USER_PROFILE_UPDATE, "1", e.getMessage()));
+        EventBus.getDefault().post(new KMEvent(KMEventConst.EVENT_REGISTER_V3, "1", e.getMessage()));
     }
 
     @Override
     public void onResponse(String response) {
 
-        EventBus.getDefault().post(new KMEvent(KMEventConst.EVENT_USER_PROFILE_UPDATE, "0", response));
+        EventBus.getDefault().post(new KMEvent(KMEventConst.EVENT_REGISTER_V3, "0", response));
     }
 }

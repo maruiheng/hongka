@@ -1,5 +1,8 @@
 package com.cwtcn.kmlib.api;
 
+import android.text.TextUtils;
+
+import com.cwtcn.kmlib.protocol.NewUserRegisterRes;
 import com.cwtcn.kmlib.protocol.PWDResetRes;
 import com.cwtcn.kmlib.protocol.PWDResetVCRes;
 import com.cwtcn.kmlib.protocol.RegisterEmailRes;
@@ -26,13 +29,13 @@ public class KMHttpHelper {
      * @param pwd
      * @param captcha
      */
-    public static void userRegister(String mobile, String pwd, String captcha) {
+    public static void userRegister(String mobile, String pwd, String captcha,String clientId) {
         OkHttpUtils.post().url(KMConstants.HTTP_API + "phoneRegistration?")
                 .addParams("loginName", mobile)
                 .addParams("password", pwd)
                 .addParams("captcha", captcha)
                 .addParams("source", KMConstants.UserType.TYPE_MOBILE)
-                .addParams("clientId", "kmdemo")
+                .addParams("clientId", clientId)
                 .build()
                 .execute(new RegisterMobileRes());
     }
@@ -97,6 +100,7 @@ public class KMHttpHelper {
      */
     public static void getImageVC4Register(String mobile) {
         OkHttpUtils.post().url(KMConstants.HTTP_API + "registration_img?")
+                .addHeader("Connection", "close")
                 .addParams("loginName", mobile)
                 .build()
                 .execute(new RegisterImageVCRes());
@@ -201,6 +205,32 @@ public class KMHttpHelper {
                 .addParams("captcha", captcha)
                 .build()
                 .execute(new UserMobileUpdateRes());
+    }
+
+
+    /**
+     * 新版手机号快速注册20190716
+     * @param loginName
+     * @param clientId
+     */
+    public static void userRegister(String loginName,String clientId){
+
+        String emailstr = "";
+        if (TextUtils.isEmpty(clientId)){
+            emailstr = loginName+"@"+"demo.com";
+        }else {
+            emailstr = loginName+"@"+clientId+".com";
+        }
+
+        OkHttpUtils.post().url(KMConstants.HTTP_API + "registration?")
+                .addParams("loginName", loginName)
+                .addParams("email", emailstr)
+                .addParams("password", "11111111")
+                .addParams("confirmPassword", "11111111")
+                .addParams("source", KMConstants.UserType.TYPE_DF)
+                .addParams("clientId", clientId)
+                .build()
+                .execute(new NewUserRegisterRes());
     }
 
 }

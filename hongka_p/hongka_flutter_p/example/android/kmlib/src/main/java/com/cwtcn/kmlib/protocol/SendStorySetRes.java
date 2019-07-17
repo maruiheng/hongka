@@ -7,15 +7,19 @@ import com.cwtcn.kmlib.netty.NettyClientManager;
 import org.greenrobot.eventbus.EventBus;
 
 /**
- * 3.2.1.48 设置手表wifi连接返回
+ * function: functionName
  *
- * @author Allen
+ * @author xhl
+ * @date 2019/6/25 11:11
  */
-public class TrackerWifiSetRes extends Packet {
-    public static final String CMD = "R_M_SET_WIFI";
+
+public class SendStorySetRes extends Packet {
+//    public static final String CMD = "R_M_DOWN_RESOURCE";
+    public static final String CMD = "sss";
+
     private String msg;
 
-    public TrackerWifiSetRes() {
+    public SendStorySetRes(){
         super(CMD);
     }
 
@@ -25,29 +29,32 @@ public class TrackerWifiSetRes extends Packet {
     }
 
     @Override
+    public Packet respond(NettyClientManager sc) {
+        EventBus.getDefault().post(new KMEvent(KMEventConst.EVENT_PUSH_STORY_INFO, status, msg));
+        return super.respond(sc);
+    }
+    @Override
     public void decodeArgs(String[] sa, int offset, int length) {
         super.decodeArgs(sa, offset, length);
         try {
             status = sa[offset++];
             offset++;
-            if (status.equals(NettyClientManager.STR_CODE_OK)) {
+            if(status.equals(NettyClientManager.STR_CODE_OK)) {
                 offset++;
-                if (sa.length > offset) {
+                if(sa.length > offset) {
                     msg = sa[offset];
-                } else {
+                }else{
                     msg = "";
                 }
+            } else if(status.equals(NettyClientManager.STR_CODE_NOT_LINE)) {
+                msg = sa[offset];
             } else {
+                offset++;
                 msg = sa[offset];
             }
         } catch (Exception e) {
-            e.getCause();
+
         }
     }
-
-    @Override
-    public Packet respond(NettyClientManager sav) {
-        EventBus.getDefault().post(new KMEvent(KMEventConst.EVENT_WIFI_SET, status, msg));
-        return super.respond(sav);
-    }
 }
+

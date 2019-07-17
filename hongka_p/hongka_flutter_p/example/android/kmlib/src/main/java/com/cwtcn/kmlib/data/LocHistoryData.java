@@ -44,17 +44,4 @@ public class LocHistoryData {
     public String getTime() {
         return time;
     }
-
-    @Override
-    public String toString() {
-        return "{" +
-                "imei='" + imei + '\'' +
-                ", lat=" + lat +
-                ", lon=" + lon +
-                ", mapType='" + mapType + '\'' +
-                ", power=" + power +
-                ", t='" + t + '\'' +
-                ", time='" + time + '\'' +
-                '}';
-    }
 }

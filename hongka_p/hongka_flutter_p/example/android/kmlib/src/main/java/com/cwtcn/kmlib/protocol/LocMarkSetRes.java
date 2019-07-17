@@ -39,7 +39,7 @@ public class LocMarkSetRes extends Packet {
             if (status.equals(NettyClientManager.STR_CODE_OK)) {
                 msg = "";
             } else {
-                msg = sa[offset++];
+                msg = sa[offset++ ];
             }
         } catch (Exception e) {
             e.getCause();

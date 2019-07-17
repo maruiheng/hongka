@@ -18,6 +18,10 @@ public class KMManager {
 
     public int port = 9997;//8080;
 
+//    public String host = "tr.abardeen.com";//"tr.abardeen.com";
+//
+//    public int port = 8080;//8080;
+
     public String mHttpUrl;
 
     /** 服务器下发的下载地址 */

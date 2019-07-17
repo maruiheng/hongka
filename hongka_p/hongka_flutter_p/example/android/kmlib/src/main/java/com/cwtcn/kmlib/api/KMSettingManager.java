@@ -22,6 +22,7 @@ import com.cwtcn.kmlib.protocol.PhoneSettingQueryReq;
 import com.cwtcn.kmlib.protocol.PhoneSettingSetReq;
 import com.cwtcn.kmlib.protocol.PhoneUsageDataGetReq;
 import com.cwtcn.kmlib.protocol.PhoneUsageDetailDataGetReq;
+import com.cwtcn.kmlib.protocol.SendStorySetReq;
 import com.cwtcn.kmlib.protocol.TauntQueryReq;
 import com.cwtcn.kmlib.protocol.TrackerAlarmQueryReq;
 import com.cwtcn.kmlib.protocol.TrackerAlarmSetReq;
@@ -58,6 +59,7 @@ import com.cwtcn.kmlib.protocol.PhoneAppSettingSetReq;
 import com.cwtcn.kmlib.util.FunUtils;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONArray;
 
 import java.util.HashMap;
 import java.util.List;
@@ -783,6 +785,17 @@ public class KMSettingManager {
         }
         NettyClientManager.addOutQ(new PhoneSettingQueryReq(imei));
     }
+
+    /**
+     * 20190625
+     * 获取推送故事信息
+     * @param imei
+     */
+    public void setStoryResource(String imei,JSONArray array) {
+        NettyClientManager.addOutQ(new SendStorySetReq(imei,array));
+    }
+
+
 
     //X2接口----------------end----------------//
 
