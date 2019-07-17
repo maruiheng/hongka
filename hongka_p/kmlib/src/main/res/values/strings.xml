@@ -1,0 +1,5 @@
+<resources>
+    <!-- 用户管理 -->
+    <string name="user_pwd_err">用户名或密码错误!</string>
+    <string name="user_not_found">用户不存在!</string>
+</resources>

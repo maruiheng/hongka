@@ -22,7 +22,7 @@ var messageData = {
     {
       "n": "星星火炬广播",
       "u":
-          "https:\/\/cdn.hongkazhijia.com\/5a\/5a7cb8e56b1f86da741c46852591d4139e377f3c1c2c4286758b40b002da3ebc.mp3",
+          "7cb8e56b1f86da741c46852591d4139e377f3c1c2c4286758b40b002da3ebc.mp3",
       "s": "0",
       "zshk": {
         "albumId": "181221013174721948475",
