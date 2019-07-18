@@ -186,6 +186,28 @@ class _MyAppState extends State<MyApp> {
               child: InkWell(
                   onTap: () async {
                     _result =
+                    await HongkaFlutter_p.quickRegisterByPhone("1371888210");
+                    setState(() {});
+                  },
+                  child: Text("快速注册")),
+            ),
+
+
+            Container(
+              margin: EdgeInsets.only(top: 20),
+              child: InkWell(
+                  onTap: () async {
+                    _result =
+                    await HongkaFlutter_p.quickLogin("1371888210");
+                    setState(() {});
+                  },
+                  child: Text("快速登录")),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 20),
+              child: InkWell(
+                  onTap: () async {
+                    _result =
                         await HongkaFlutter_p.BindWearer("865852032302588");
                     setState(() {});
                   },

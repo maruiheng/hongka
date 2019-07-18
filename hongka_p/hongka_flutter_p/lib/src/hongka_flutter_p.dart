@@ -32,6 +32,14 @@ class HongkaFlutter_p {
     return result;
   }
 
+  ///快速登录
+  static Future<String> quickLogin(String phone) async {
+    final String result =
+    await _channel.invokeMethod(KM_QUICK_LOGIN, {"phone": "$phone"});
+    return result;
+  }
+
+
   ///注册 获取图片验证码
   static Future<Uint8List> ImageVC4Register(String phone) async {
     print('mrh  ImageVC4Register');
@@ -50,6 +58,13 @@ class HongkaFlutter_p {
   static Future<String> RegisterByPhone(String phone,String pwd,String code) async {
     final String result =
     await _channel.invokeMethod(KM_REGISTER_MOBLE, {"phone": "$phone","pwd":"$pwd","code":"$code"});
+    return result;
+  }
+
+  ///快速注册注册
+  static Future<String> quickRegisterByPhone(String phone) async {
+    final String result =
+    await _channel.invokeMethod(KM_QUICK_REGISTER, {"phoneNum": "$phone"});
     return result;
   }
 
