@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.cwtcn.kmlib.data.ContactData;
 import com.cwtcn.kmlib.data.FriendData;
+import com.cwtcn.kmlib.data.FriendDataList;
 import com.cwtcn.kmlib.event.KMEvent;
 import com.cwtcn.kmlib.event.KMEventConst;
 import com.cwtcn.kmlib.netty.NettyClientManager;
@@ -137,15 +138,14 @@ public class KMContactManager {
 
     /**
      * 删除小伙伴
-     * @param imei
      * @param friends
      */
-    public void delFriend(String imei, List<FriendData> friends) {
-        if(!FunUtils.isTrackerHasBleFriends(imei)) {
+    public void delFriend(FriendDataList friends) {
+        if(!FunUtils.isTrackerHasBleFriends(friends.getImei())) {
             EventBus.getDefault().post(new KMEvent(KMEventConst.EVENT_WEARER_FRIEND_GET, "-1", KMConstants.KMTips.ERROR_NOT_SUPPORT));
             return;
         }
-        NettyClientManager.addOutQ(new WearerFriendDelReq(imei, friends));
+        NettyClientManager.addOutQ(new WearerFriendDelReq(friends.getImei(), friends.getList()));
     }
 
     /**

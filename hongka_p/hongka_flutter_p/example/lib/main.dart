@@ -274,6 +274,30 @@ class _MyAppState extends State<MyApp> {
                   },
                   child: Text("获取手表最新位置")),
             ),
+
+            Container(
+              margin: EdgeInsets.only(top: 20),
+              child: InkWell(
+                  onTap: () async {
+                    LocHistoryCountBean la=
+                    await HongkaFlutter_p.trackerHistoryGet("865852032302588","20180715");
+                    print(la.toString());
+                  },
+                  child: Text("获取手表历史位置")),
+            ),
+
+
+            Container(
+              margin: EdgeInsets.only(top: 20),
+              child: InkWell(
+                  onTap: () async {
+                    _result =
+                    await HongkaFlutter_p.sendTextMsg("865852032302588","2022年世界杯亚洲区预选赛抽签结果揭晓");
+                    setState(() {});
+                  },
+                  child: Text("发送文字")),
+            ),
+
             Container(
               margin: EdgeInsets.only(top: 20),
               child: InkWell(

@@ -6,13 +6,19 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.cwtcn.kmlib.api.KMChatManager;
 import com.cwtcn.kmlib.api.KMConstants;
+import com.cwtcn.kmlib.api.KMContactManager;
 import com.cwtcn.kmlib.api.KMLocationManager;
 import com.cwtcn.kmlib.api.KMManager;
 import com.cwtcn.kmlib.api.KMPushMamager;
 import com.cwtcn.kmlib.api.KMSettingManager;
 import com.cwtcn.kmlib.api.KMUserManager;
 import com.cwtcn.kmlib.api.KMWearerManager;
+import com.cwtcn.kmlib.data.ContactList;
+import com.cwtcn.kmlib.data.FriendData;
+import com.cwtcn.kmlib.data.FriendDataList;
+import com.cwtcn.kmlib.data.LocHistoryCountData;
 import com.cwtcn.kmlib.data.LocHistoryData;
 import com.cwtcn.kmlib.data.LoginData;
 import com.cwtcn.kmlib.data.MessagePushData;
@@ -141,6 +147,49 @@ public class MainActivity extends FlutterActivity implements MyCallBack {
                 KMWearerManager.getInstance().wearerUnbind(call.<String>argument("imei"));
                 hashtable.put(Config.KM_WEARER_UNBIND, result);
                 break;
+            case Config.KM_QUERY_CONTACTS:
+                //获取手表联系人
+                KMContactManager.getInstance().queryContacts(call.<String>argument("imei"));
+                hashtable.put(Config.KM_QUERY_CONTACTS, result);
+                break;
+            case Config.KM_SETCONTACTS:
+                //保存联系人
+                Gson gson2 = new Gson();
+                ContactList contactList = gson2.fromJson(call.<String>argument("contactListBean"), ContactList.class);
+                KMContactManager.getInstance().setContacts(contactList.getImei(), contactList.getList());
+                hashtable.put(Config.KM_SETCONTACTS, result);
+                break;
+            case Config.KM_UPGRADE_FRIEND:
+                //更新小伙伴
+                Gson gson3 = new Gson();
+                FriendData friendData = gson3.fromJson(call.<String>argument("friendDataBean"), FriendData.class);
+                KMContactManager.getInstance().updateFriend(call.<String>argument("imei"), friendData);
+                hashtable.put(Config.KM_UPGRADE_FRIEND, result);
+                break;
+            case Config.KM_DEL_FRIEND:
+                //删除小伙伴
+                Gson gson4 = new Gson();
+                FriendDataList friendDatas = gson4.fromJson(call.<String>argument("friendDataBean"), FriendDataList.class);
+                KMContactManager.getInstance().delFriend(friendDatas);
+                hashtable.put(Config.KM_DEL_FRIEND, result);
+                break;
+            case Config.KM_WIFI_SET:
+                //手表Wi-Fi设置
+                KMSettingManager.getInstance().setWiFi(call.<String>argument("imei"),
+                        call.<String>argument("wifiName"),
+                        call.<String>argument("wifiPassword"));
+                hashtable.put(Config.KM_WIFI_SET, result);
+                break;
+            case Config.KM_SNED_TEXTMSG:
+                KMChatManager.getInstance().sendTextMsg(call.<String>argument("imei"),
+                        call.<String>argument("txt"));
+                hashtable.put(Config.KM_SNED_TEXTMSG, result);
+                break;
+            case Config.KM_TRACKER_HISTORY_GET:
+                KMLocationManager.getInstance().trackerHistoryGet(call.<String>argument("imei"),
+                        call.<String>argument("date"));
+                hashtable.put(Config.KM_TRACKER_HISTORY_GET, result);
+                break;
         }
 
 //        if (call.method.equals(Config.KM_LOGIN)) {
@@ -231,6 +280,7 @@ public class MainActivity extends FlutterActivity implements MyCallBack {
         } else {
 //            eventSink.success("ImageVC4Register  get img success");
         }
+
         Log.e("mrh", mEvent.getEventId() + "  code");
 
         if (mEvent.getEventId() == KMEventConst.EVENT_WEARER_VC_GET) {
@@ -347,7 +397,75 @@ public class MainActivity extends FlutterActivity implements MyCallBack {
                 hashtable.get(Config.KM_MESSAGE_PUSH).success("failed");
                 Toast.makeText(this, mEvent.getEventMsg(), Toast.LENGTH_SHORT).show();
             }
+        } else if (KMEventConst.EVENT_WEARER_CONTACT_GET == mEvent.getEventId()) {
+            //获取手表联系人
+            if (KMConstants.CODE_OK.equals(mEvent.getEventStatus())) {
+                ContactList contactList = (ContactList) mEvent.getEventData();
+                hashtable.get(Config.KM_QUERY_CONTACTS).success(new Gson().toJson(contactList));
+                Log.e("mrh", contactList.toString());
+                Toast.makeText(this, "获取手表联系人", Toast.LENGTH_SHORT).show();
+            } else {
+                hashtable.get(Config.KM_QUERY_CONTACTS).success("failed");
+                Toast.makeText(this, mEvent.getEventMsg(), Toast.LENGTH_SHORT).show();
+            }
+        } else if (KMEventConst.EVENT_WEARER_CONTACT_SET == mEvent.getEventId()) {
+            //保存手表联系人
+            if (KMConstants.CODE_OK.equals(mEvent.getEventStatus())) {
+                hashtable.get(Config.KM_SETCONTACTS).success("success");
+                Toast.makeText(this, "保存手表联系人", Toast.LENGTH_SHORT).show();
+            } else {
+                hashtable.get(Config.KM_SETCONTACTS).success("failed");
+                Toast.makeText(this, mEvent.getEventMsg(), Toast.LENGTH_SHORT).show();
+            }
+        } else if (KMEventConst.EVENT_WEARER_FRIEND_UPDATE == mEvent.getEventId()) {
+            //更新小伙伴
+            if (KMConstants.CODE_OK.equals(mEvent.getEventStatus())) {
+                hashtable.get(Config.KM_UPGRADE_FRIEND).success("success");
+                Toast.makeText(this, "更新小伙伴", Toast.LENGTH_SHORT).show();
+            } else {
+                hashtable.get(Config.KM_UPGRADE_FRIEND).success("failed");
+                Toast.makeText(this, mEvent.getEventMsg(), Toast.LENGTH_SHORT).show();
+            }
+        } else if (KMEventConst.EVENT_WEARER_FRIEND_DEL == mEvent.getEventId()) {
+            //删除小伙伴
+            if (KMConstants.CODE_OK.equals(mEvent.getEventStatus())) {
+                hashtable.get(Config.KM_DEL_FRIEND).success("success");
+                Toast.makeText(this, "删除小伙伴", Toast.LENGTH_SHORT).show();
+            } else {
+                hashtable.get(Config.KM_DEL_FRIEND).success("failed");
+                Toast.makeText(this, mEvent.getEventMsg(), Toast.LENGTH_SHORT).show();
+            }
+        } else if (KMEventConst.EVENT_WIFI_SET == mEvent.getEventId()) {
+            //手表Wi-Fi设置
+            if (KMConstants.CODE_OK.equals(mEvent.getEventStatus())) {
+                hashtable.get(Config.KM_WIFI_SET).success("success");
+                Toast.makeText(this, "手表设置Wi-Fi", Toast.LENGTH_SHORT).show();
+            } else {
+                hashtable.get(Config.KM_WIFI_SET).success("failed");
+                Toast.makeText(this, mEvent.getEventMsg(), Toast.LENGTH_SHORT).show();
+            }
+        }else if (KMEventConst.EVENT_IM_SEND == mEvent.getEventId()) {
+            //发送文字
+            if (KMConstants.CODE_OK.equals(mEvent.getEventStatus())) {
+                hashtable.get(Config.KM_SNED_TEXTMSG).success("success");
+                Toast.makeText(this, "发送文字", Toast.LENGTH_SHORT).show();
+            } else {
+                hashtable.get(Config.KM_SNED_TEXTMSG).success("failed");
+                Toast.makeText(this, mEvent.getEventMsg(), Toast.LENGTH_SHORT).show();
+            }
+        }else if (KMEventConst.EVENT_LOC_HISTORY_GET == mEvent.getEventId()) {
+            //获取手表历史位置
+            if (KMConstants.CODE_OK.equals(mEvent.getEventStatus())) {
 
+                LocHistoryCountData data = (LocHistoryCountData) mEvent.getEventData();
+                Log.e("mrh", data.toString());
+
+                hashtable.get(Config.KM_TRACKER_HISTORY_GET).success(new Gson().toJson(data));
+                Toast.makeText(this, "获取手表历史位置", Toast.LENGTH_SHORT).show();
+            } else {
+                hashtable.get(Config.KM_SNED_TEXTMSG).success("failed");
+                Toast.makeText(this, mEvent.getEventMsg(), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -355,7 +473,7 @@ public class MainActivity extends FlutterActivity implements MyCallBack {
         this.eventSink = eventSink;
     }
 
-    private void getbitmapByte(KMEvent mEvent){
+    private void getbitmapByte(KMEvent mEvent) {
         new Thread(() -> {
             Bitmap bitmap = (Bitmap) mEvent.getEventData();
             ByteBuffer allocate = ByteBuffer.allocate(bitmap.getByteCount());

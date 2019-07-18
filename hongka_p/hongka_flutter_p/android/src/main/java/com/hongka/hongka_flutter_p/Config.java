@@ -15,4 +15,13 @@ public class Config {
     public final static String KM_TRACKER_LDGET = "trackerLDGet";
     public final static String KM_QUICK_REGISTER = "quickRegister";
     public final static String KM_QUICK_LOGIN = "quickLogin";
+    public final static String KM_QUERY_CONTACTS = "queryContacts";//查询联系人
+    public final static String KM_SETCONTACTS = "setContacts";//保存联系人
+    public final static String KM_UPGRADE_FRIEND = "updateFriend";//更新小伙伴
+    public final static String KM_DEL_FRIEND = "delFriend";//删除小伙伴
+    public final static String KM_WIFI_SET = "setWiFi"; //手表Wi-Fi设置
+    public final static String KM_SNED_TEXTMSG = "sendTextMsg";//发送文字
+    public final static String KM_TRACKER_HISTORY_GET = "trackerHistoryGet";//获取手表历史位置
+
+
 }
